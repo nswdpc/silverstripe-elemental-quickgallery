@@ -1,0 +1,18 @@
+---
+Name: nswdpc-elemental-quickgallery
+---
+NSWDPC\Elemental\Models\QuickGallery\ElementQuickGallery:
+  allowed_file_types:
+    - jpg
+    - jpeg
+    - gif
+    - png
+    - webp
+---
+Name: nswdpc-elemental-quickgallery-gridhelper
+Only:
+  moduleexists: 'nswdpc/silverstripe-grid-helpers'
+---
+NSWDPC\Elemental\Models\QuickGallery\ElementQuickGallery:
+  extensions:
+    - 'NSWDPC\GridHelper\Extensions\ElementHasChildrenExtension'

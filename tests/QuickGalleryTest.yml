@@ -1,0 +1,22 @@
+SilverStripe\Assets\Folder:
+  folder1:
+    Name: folder
+SilverStripe\Assets\Image:
+  image1:
+    Title: gratisography-316H
+    FileFilename: folder/gratisography-316H.jpg
+    FileHash: cdcbf0f10f027f04ca8f3498d831fbb3ee149e8d
+    Parent: =>SilverStripe\Assets\Folder.folder1
+    Name: gratisography-316H.jpg
+  image2:
+    Title: gratisography-confident-smile
+    FileFilename: folder/gratisography-confident-smile.jpg
+    FileHash: 3c07dca36dc39672c34cb4e55000a675894c7fed
+    Parent: =>SilverStripe\Assets\Folder.folder1
+    Name: gratisography-confident-smile.jpg
+  image3:
+    Title: gratisography-chicken-view
+    FileFilename: folder/gratisography-chicken-view.jpg
+    FileHash: ab3eb94ff668a23295e365d8e1bf1e94b2561a26
+    Parent: =>SilverStripe\Assets\Folder.folder1
+    Name: gratisography-chicken-view.jpg
