@@ -3,10 +3,11 @@
 namespace NSWDPC\Elemental\Models\QuickGallery;
 
 use Bummzack\SortableFile\Forms\SortableUploadField;
-use DNADesign\Elemental\Models\BaseElement;
+use DNADesign\Elemental\Models\ElementContent;
 use SilverStripe\Assets\Image;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\NumericField;
+use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataObject;
 
@@ -14,7 +15,7 @@ use SilverStripe\ORM\DataObject;
  * ElementQuickGallery adds a gallery via a sortable upload field
  * All images can be added in one go!
  */
-class ElementQuickGallery extends BaseElement {
+class ElementQuickGallery extends ElementContent {
 
     private static $icon = 'font-icon-thumbnails';
 
@@ -43,6 +44,7 @@ class ElementQuickGallery extends BaseElement {
     ];
 
     private static $db = [
+        'GalleryType' => 'Varchar(64)',
         'Width' => 'Int',
         'Height' => 'Int'
     ];
@@ -99,6 +101,17 @@ class ElementQuickGallery extends BaseElement {
             ]);
             $fields->addFieldsToTab(
                 'Root.Main', [
+                    DropdownField::create(
+                        'GalleryType',
+                        _t(
+                            __CLASS__ . '.TYPE',
+                            'Gallery type'
+                        ),
+                        [
+                            'grid' => 'Grid',
+                            'Carousel' => 'Carousel'
+                        ]
+                    )->setEmptyString('none'),
                     NumericField::create(
                         'Width',
                         _t(
