@@ -8,6 +8,7 @@ use SilverStripe\Assets\Image;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\NumericField;
 use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataObject;
 
@@ -33,6 +34,12 @@ class ElementQuickGallery extends ElementContent {
 
     private static $inline_editable = false;
 
+    private static $db = [
+        'GalleryType' => 'Varchar(64)',
+        'Width' => 'Int',
+        'Height' => 'Int',
+        'ShowCaptions' => 'Boolean'
+    ];
     private static $many_many = [
         'Images' => Image::class
     ];
@@ -41,12 +48,6 @@ class ElementQuickGallery extends ElementContent {
         'Images' => [
             'SortOrder' => 'Int'
         ]
-    ];
-
-    private static $db = [
-        'GalleryType' => 'Varchar(64)',
-        'Width' => 'Int',
-        'Height' => 'Int'
     ];
 
     private static $owns = [
@@ -112,6 +113,13 @@ class ElementQuickGallery extends ElementContent {
                             'Carousel' => 'Carousel'
                         ]
                     )->setEmptyString('none'),
+                    CheckboxField::create(
+                        'ShowCaptions',
+                        _t(
+                            __CLASS__ . '.CAPTIONS',
+                            'Show image captions'
+                        )
+                    ),
                     NumericField::create(
                         'Width',
                         _t(
