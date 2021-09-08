@@ -80,7 +80,7 @@ class ElementQuickGallery extends ElementContent {
      * Return the generated thumbnail width, use in templates if you want to rely on the configured default width value
      */
     public function getThumbWidth() {
-        return $this->Width;
+        $width = $this->Width;
         if($width <= 0) {
             $width = $this->config()->get('default_thumb_width');
         }
