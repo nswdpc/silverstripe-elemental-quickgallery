@@ -162,13 +162,13 @@ class ElementQuickGallery extends ElementContent {
                     NumericField::create(
                         'Width',
                         _t(
-                            __CLASS__ . 'WIDTH', 'Thumbnail width'
+                            __CLASS__ . '.WIDTH', 'Thumbnail width'
                         )
                     ),
                     NumericField::create(
                         'Height',
                         _t(
-                            __CLASS__ . 'WIDTH', 'Thumbnail height'
+                            __CLASS__ . '.HEIGHT', 'Thumbnail height'
                         )
                     )
                 ]
@@ -186,7 +186,7 @@ class ElementQuickGallery extends ElementContent {
                     ->setAllowedExtensions($this->getAllowedFileTypes())
                     ->setDescription(
                         sprintf(_t(
-                            __CLASS__ . 'ALLOWED_FILE_TYPES',
+                            __CLASS__ . '.ALLOWED_FILE_TYPES',
                             'Allowed file types: %s'
                         ), implode(",", $this->getAllowedFileTypes()))
                     )
