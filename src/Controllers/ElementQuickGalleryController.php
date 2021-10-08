@@ -30,11 +30,14 @@ class ElementQuickGalleryController extends ElementController
             Requirements::css('https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css');
             Requirements::css('https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css');
             Requirements::css('https://cdnjs.cloudflare.com/ajax/libs/slick-lightbox/0.2.12/slick-lightbox.css');
+
+
+
             Requirements::customScript(
 <<<JS
     $(document).ready(function(){
-        $('.nsw-gallery').slickLightbox({
-            itemSelector: '> .nsw-col > .nsw-media > a'
+        $('.gallery').slickLightbox({
+            itemSelector: 'a.gallery-item'
         });
     });
 JS
