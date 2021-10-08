@@ -2,6 +2,7 @@
 
 namespace NSWDPC\Elemental\Models\QuickGallery;
 
+use NSWDPC\Elemental\Models\QuickGallery\ElementQuickGalleryController;
 use Bummzack\SortableFile\Forms\SortableUploadField;
 use DNADesign\Elemental\Models\ElementContent;
 use SilverStripe\Assets\Image;
@@ -11,7 +12,6 @@ use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\ORM\DataList;
 
 /**
  * ElementQuickGallery adds a gallery via a sortable upload field
@@ -35,11 +35,14 @@ class ElementQuickGallery extends ElementContent {
 
     private static $inline_editable = false;
 
+    private static $controller_class = ElementQuickGalleryController::class;
+
     private static $db = [
         'GalleryType' => 'Varchar(64)',
         'Width' => 'Int',
         'Height' => 'Int',
-        'ShowCaptions' => 'Boolean'
+        'ShowCaptions' => 'Boolean',
+        'UseJS' => 'Boolean'
     ];
     private static $many_many = [
         'Images' => Image::class
@@ -56,25 +59,14 @@ class ElementQuickGallery extends ElementContent {
     ];
 
     private static $allowed_file_types = ["jpg","jpeg","gif","png","webp"];
-
-    /**
-     * @var int
-     */
-    private static $default_thumb_width = 375;
-
-    /**
-     * @var int
-     */
-    private static $default_thumb_height = 282;
+    private static $default_thumb_width = 128;
+    private static $default_thumb_height = 96;
 
     public function getType()
     {
         return _t(__CLASS__ . '.BlockType', 'Quick Gallery');
     }
 
-    /**
-     * Return the generated thumbnail width, use in templates if you want to rely on the configured default width value
-     */
     public function getThumbWidth() {
         $width = $this->Width;
         if($width <= 0) {
@@ -83,9 +75,6 @@ class ElementQuickGallery extends ElementContent {
         return $width;
     }
 
-    /**
-     * Return the generated thumbnail height, use in templates if you want to rely on the configured default height value
-     */
     public function getThumbHeight() {
         $height = $this->Height;
         if($height <= 0) {
@@ -103,23 +92,11 @@ class ElementQuickGallery extends ElementContent {
         return $types;
     }
 
-    /**
-     * Ensure a sane dimension is set
-     */
     public function onBeforeWrite()
     {
         parent::onBeforeWrite();
-
-        // integers only
-        $this->Width = round($this->Width);
-        $this->Height = round($this->Height);
-
-        if($this->Width < 0) {
-            $this->Width = 0;
-        }
-        if($this->Height < 0) {
-            $this->Height = 0;
-        }
+        $this->Width = $this->getThumbWidth();
+        $this->Height = $this->getThumbHeight();
     }
 
     public function getCMSFields() {
@@ -128,7 +105,7 @@ class ElementQuickGallery extends ElementContent {
                 'Images'
             ]);
             $fields->addFieldsToTab(
-                'Root.Settings', [
+                'Root.Main', [
                     DropdownField::create(
                         'GalleryType',
                         _t(
@@ -136,11 +113,17 @@ class ElementQuickGallery extends ElementContent {
                             'Gallery type'
                         ),
                         [
-                            'grid' => _t(__CLASS__ . '.GRID_OF_IMAGES','Grid of images'),
-                            'slideshow' => _t(__CLASS__ . '.SLIDESHOW', 'Slideshow'),
-                            'Carousel' => _t(__CLASS__ . '.CAROUSEL_DEPRECATED', 'Carousel - deprecated - (note: https://shouldiuseacarousel.com/)'),
+                            'grid' => 'Grid',
+                            'Carousel' => 'Carousel'
                         ]
                     )->setEmptyString('none'),
+                    CheckboxField::create(
+                        'UseJS',
+                        _t(
+                            __CLASS__ . '.JAVASCRIPT',
+                            'Use enhanced gallery'
+                        )
+                    ),
                     CheckboxField::create(
                         'ShowCaptions',
                         _t(
@@ -151,20 +134,15 @@ class ElementQuickGallery extends ElementContent {
                     NumericField::create(
                         'Width',
                         _t(
-                            __CLASS__ . '.WIDTH', 'Thumbnail width'
+                            __CLASS__ . 'WIDTH', 'Thumbnail width'
                         )
                     ),
                     NumericField::create(
                         'Height',
                         _t(
-                            __CLASS__ . '.HEIGHT', 'Thumbnail height'
+                            __CLASS__ . 'WIDTH', 'Thumbnail height'
                         )
-                    )
-                ]
-            );
-
-            $fields->addFieldsToTab(
-                'Root.Main', [
+                    ),
                     SortableUploadField::create(
                         'Images',
                         _t(
@@ -175,13 +153,12 @@ class ElementQuickGallery extends ElementContent {
                     ->setAllowedExtensions($this->getAllowedFileTypes())
                     ->setDescription(
                         sprintf(_t(
-                            __CLASS__ . '.ALLOWED_FILE_TYPES',
+                            __CLASS__ . 'ALLOWED_FILE_TYPES',
                             'Allowed file types: %s'
                         ), implode(",", $this->getAllowedFileTypes()))
                     )
                 ]
             );
-
         });
         return parent::getCMSFields();
     }
@@ -189,7 +166,7 @@ class ElementQuickGallery extends ElementContent {
     /**
      * Return images in sorted order
      */
-    public function SortedImages() : DataList {
+    public function SortedImages() {
         return $this->Images()->Sort('SortOrder');
     }
 }
