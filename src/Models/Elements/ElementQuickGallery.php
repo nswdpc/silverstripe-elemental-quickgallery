@@ -2,7 +2,7 @@
 
 namespace NSWDPC\Elemental\Models\QuickGallery;
 
-use NSWDPC\Elemental\Models\QuickGallery\ElementQuickGalleryController;
+use NSWDPC\Elemental\Controllers\QuickGallery\ElementQuickGalleryController;
 use Bummzack\SortableFile\Forms\SortableUploadField;
 use DNADesign\Elemental\Models\ElementContent;
 use SilverStripe\Assets\Image;
