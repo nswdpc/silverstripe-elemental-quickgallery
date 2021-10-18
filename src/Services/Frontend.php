@@ -94,7 +94,7 @@ class Frontend {
         $anchor = $this->element->getAnchor();
         $script = <<<JS
 $(document).ready(function(){
-    $('#{$anchor} .gallery').slickLightbox({
+    $('#{$anchor} [data-type="gallery"]').slickLightbox({
         itemSelector: 'a'
     });
 });

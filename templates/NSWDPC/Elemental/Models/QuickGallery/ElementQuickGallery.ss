@@ -1,5 +1,5 @@
 <% include ElementQuickGalleryTitle %>
-<div class="{$ElementStyles}">
+<div class="{$ElementStyles}" data-type="gallery">
     <% loop $SortedImages %>
     <div>
         <a<% if $Title %> title="{$Title.XML}"<% end_if %> href="{$Link}">
