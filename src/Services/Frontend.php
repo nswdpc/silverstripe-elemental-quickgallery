@@ -95,7 +95,12 @@ class Frontend {
         $script = <<<JS
 $(document).ready(function(){
     $('#{$anchor} [data-type="gallery"]').slickLightbox({
-        itemSelector: 'a'
+        itemSelector: 'a',
+        caption: function(element, info) {
+            return $(element).next('p.caption').text()
+        },
+        captionPosition: 'dynamic',
+        lazy: true
     });
 });
 JS;
