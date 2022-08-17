@@ -9,6 +9,7 @@ use Silverstripe\Assets\Dev\TestAssetStore;
 use SilverStripe\Assets\File;
 use SilverStripe\Assets\Folder;
 use SilverStripe\Assets\Image;
+use SilverStripe\View\SSViewer;
 
 /**
  * Unit test to vverify quick gallery setup
@@ -41,6 +42,8 @@ class QuickGalleryTest extends SapphireTest
 
     public function testGallery() {
 
+        SSViewer::set_themes(['$public', '$default']);
+
         Config::inst()->update(ElementQuickGallery::class, 'default_thumb_width', 190);
         Config::inst()->update(ElementQuickGallery::class, 'default_thumb_height', 160);
 
@@ -53,8 +56,11 @@ class QuickGalleryTest extends SapphireTest
         $gallery->write();
 
         // assert that defaults kick in when incorrect values are provided
-        $this->assertEquals(190, $gallery->Width, "Gallery width should be 190");
-        $this->assertEquals(160, $gallery->Height, "Gallery height should be 160");
+        $this->assertEquals(0, $gallery->Width, "Gallery width should be 0");
+        $this->assertEquals(0, $gallery->Height, "Gallery height should be 0");
+
+        $this->assertEquals(190, $gallery->getThumbWidth(), "Gallery width should be 190");
+        $this->assertEquals(160, $gallery->getThumbHeight(), "Gallery height should be 160");
 
         $gallery->Width = 400;
         $gallery->write();
