@@ -21,7 +21,7 @@ class QuickGalleryTest extends SapphireTest
 
     protected static $fixture_file = 'QuickGalleryTest.yml';
 
-    public function setUp() {
+    public function setUp() : void {
         parent::setUp();
 
         TestAssetStore::activate('data');
@@ -33,7 +33,7 @@ class QuickGalleryTest extends SapphireTest
         }
     }
 
-    public function tearDown()
+    public function tearDown() : void
     {
         TestAssetStore::reset();
         parent::tearDown();
