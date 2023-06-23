@@ -115,8 +115,8 @@ class ElementQuickGallery extends ElementContent {
         parent::onBeforeWrite();
 
         // integers only
-        $this->Width = round($this->Width);
-        $this->Height = round($this->Height);
+        $this->Width = round($this->Width ?? 0);
+        $this->Height = round($this->Height ?? 0);
 
         if($this->Width < 0) {
             $this->Width = 0;
