@@ -44,8 +44,8 @@ class QuickGalleryTest extends SapphireTest
 
         SSViewer::set_themes(['$public', '$default']);
 
-        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_width', 190);
-        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_height', 160);
+        Config::modify()->set(ElementQuickGallery::class, 'default_thumb_width', 190);
+        Config::modify()->set(ElementQuickGallery::class, 'default_thumb_height', 160);
 
         $record = [
             'Title' => 'Test gallery',
@@ -91,7 +91,7 @@ class QuickGalleryTest extends SapphireTest
 
         $this->assertEquals(3, $images->count(), "Should be 3 images");
 
-        $gallery->doPublish();
+        $gallery->publishRecursive();
 
         $this->assertTrue($gallery->isPublished(), "Gallery should be published");
 
