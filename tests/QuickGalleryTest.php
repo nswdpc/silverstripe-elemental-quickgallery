@@ -44,23 +44,24 @@ class QuickGalleryTest extends SapphireTest
 
         SSViewer::set_themes(['$public', '$default']);
 
-        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_width', 190);
-        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_height', 160);
+        $default_thumb_width = 190;
+        $default_thumb_height = 160;
+
+        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_width', $default_thumb_width);
+        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_height', $default_thumb_height);
 
         $record = [
             'Title' => 'Test gallery',
-            'Width' => -20,
-            'Height' => -100,
         ];
         $gallery =  ElementQuickGallery::create($record);
         $gallery->write();
 
         // assert that defaults kick in when incorrect values are provided
-        $this->assertEquals(0, $gallery->Width, "Gallery width should be 0");
-        $this->assertEquals(0, $gallery->Height, "Gallery height should be 0");
+        $this->assertEquals($default_thumb_width, $gallery->Width, "Gallery width matches default value");
+        $this->assertEquals($default_thumb_height, $gallery->Height, "Gallery height matches default value");
 
-        $this->assertEquals(190, $gallery->getThumbWidth(), "Gallery width should be 190");
-        $this->assertEquals(160, $gallery->getThumbHeight(), "Gallery height should be 160");
+        $this->assertEquals($default_thumb_width, $gallery->getThumbWidth(), "Gallery width matches default value");
+        $this->assertEquals($default_thumb_height, $gallery->getThumbHeight(), "Gallery height matches default value");
 
         $gallery->Width = 400;
         $gallery->write();
@@ -112,6 +113,72 @@ class QuickGalleryTest extends SapphireTest
         $this->assertTrue(strpos($template, $url1) !== false, "{$url1} is not in the template");
         $this->assertTrue(strpos($template, $url2) !== false, "{$url2} is not in the template");
         $this->assertTrue(strpos($template, $url3) !== false, "{$url3} is not in the template");
+
+    }
+
+    public function testNegativeDimensions() {
+
+        $default_thumb_width = 80;
+        $default_thumb_height = 80;
+
+        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_width', $default_thumb_width);
+        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_height', $default_thumb_height);
+
+        $record = [
+            'Title' => 'Test dimensions',
+            'Width' => -100,
+            'Height' => -80
+        ];
+        $gallery =  ElementQuickGallery::create($record);
+        $gallery->write();
+
+
+        $this->assertEquals(100, $gallery->Width, "Gallery width matches abs value");
+        $this->assertEquals(80, $gallery->Height, "Gallery height matches abs value");
+
+    }
+
+    public function testPositiveDimensions() {
+
+        $default_thumb_width = 140;
+        $default_thumb_height = 140;
+
+        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_width', $default_thumb_width);
+        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_height', $default_thumb_height);
+
+        $record = [
+            'Title' => 'Test dimensions',
+            'Width' => 400,
+            'Height' => 400
+        ];
+        $gallery =  ElementQuickGallery::create($record);
+        $gallery->write();
+
+
+        $this->assertEquals(400, $gallery->Width, "Gallery width matches positive value");
+        $this->assertEquals(400, $gallery->Height, "Gallery height matches positive value");
+
+    }
+
+    public function testZeroDimensions() {
+
+        $default_thumb_width = 140;
+        $default_thumb_height = 140;
+
+        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_width', $default_thumb_width);
+        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_height', $default_thumb_height);
+
+        $record = [
+            'Title' => 'Test dimensions',
+            'Width' => 0,
+            'Height' => 0
+        ];
+        $gallery =  ElementQuickGallery::create($record);
+        $gallery->write();
+
+
+        $this->assertEquals(0, $gallery->Width, "Gallery width matches zero value");
+        $this->assertEquals(0, $gallery->Height, "Gallery height matches zero value");
 
     }
 
