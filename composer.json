@@ -1,6 +1,6 @@
 {
     "name": "nswdpc/silverstripe-elemental-quickgallery",
-    "description": "Quick gallery element Silverstripe",
+    "description": "Quick gallery content block for Silverstripe CMS",
     "type": "silverstripe-vendormodule",
     "keywords": [
         "silverstripe",
