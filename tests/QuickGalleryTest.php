@@ -1,6 +1,6 @@
 <?php
 
-namespace  NSWDPC\Elemental\Tests\QuickGallery;
+namespace NSWDPC\Elemental\Models\QuickGallery\Tests;
 
 use NSWDPC\Elemental\Models\QuickGallery\ElementQuickGallery;
 use SilverStripe\Core\Config\Config;

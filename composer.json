@@ -22,6 +22,18 @@
             "role": "Developer"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "NSWDPC\\Elemental\\Models\\QuickGallery\\": [
+                "src/Controllers/",
+                "src/Extensions/",
+                "src/Models/",
+                "src/Models/Elements/",
+                "src/Services/"
+            ],
+            "NSWDPC\\Elemental\\Models\\QuickGallery\\Tests\\": "tests/"
+        }
+    },
     "require": {
         "dnadesign/silverstripe-elemental": "^4.9.0",
         "bummzack/sortablefile" : "^2.1",
