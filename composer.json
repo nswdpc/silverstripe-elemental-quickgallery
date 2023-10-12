@@ -24,14 +24,11 @@
     ],
     "autoload": {
         "psr-4": {
-            "NSWDPC\\Elemental\\Models\\QuickGallery\\": [
-                "src/Controllers/",
-                "src/Extensions/",
-                "src/Models/",
-                "src/Models/Elements/",
-                "src/Services/"
-            ],
-            "NSWDPC\\Elemental\\Models\\QuickGallery\\Tests\\": "tests/"
+            "NSWDPC\\Elemental\\Models\\QuickGallery\\": "src/Models/Elements/",
+            "NSWDPC\\Elemental\\Extensions\\QuickGallery\\": "src/Extensions/",
+            "NSWDPC\\Elemental\\Controllers\\QuickGallery\\": "src/Controllers/",
+            "NSWDPC\\Elemental\\Services\\QuickGallery\\": "src/Services/",
+            "NSWDPC\\Elemental\\Tests\\QuickGallery\\": "tests/"
         }
     },
     "require": {
