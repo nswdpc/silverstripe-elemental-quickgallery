@@ -82,7 +82,7 @@ class ElementQuickGallery extends ElementContent {
     public function getThumbWidth() {
         $width = $this->Width;
         if($width <= 0) {
-            $width = $this->config()->get('default_thumb_width');
+            $width = self::config()->get('default_thumb_width');
         }
         return $width;
     }
@@ -93,13 +93,13 @@ class ElementQuickGallery extends ElementContent {
     public function getThumbHeight() {
         $height = $this->Height;
         if($height <= 0) {
-            $height = $this->config()->get('default_thumb_height');
+            $height = self::config()->get('default_thumb_height');
         }
         return $height;
     }
 
     public function getAllowedFileTypes() {
-        $types = $this->config()->get('allowed_file_types');
+        $types = self::config()->get('allowed_file_types');
         if(empty($types)) {
             $types = ["jpg","jpeg","gif","png","webp"];
         }
@@ -114,87 +114,90 @@ class ElementQuickGallery extends ElementContent {
     {
         parent::onBeforeWrite();
 
-        // integers only
-        $this->Width = round($this->Width ?? 0);
-        $this->Height = round($this->Height ?? 0);
+        // if a new element, set dimensions to the defaults from config
+        if(!$this->exists()) {
+            if(is_null($this->Width)) {
+                $this->Width = $this->getThumbWidth();
+            }
+            if(is_null($this->Height)) {
+                $this->Height = $this->getThumbHeight();
+            }
+        }
 
-        if($this->Width < 0) {
-            $this->Width = 0;
-        }
-        if($this->Height < 0) {
-            $this->Height = 0;
-        }
+        // Enforce dimensions >=0 values
+        $this->Width = abs(intval($this->Width ?? 0));
+        $this->Height = abs(intval($this->Height ?? 0));
+
     }
 
     public function getCMSFields() {
-        $this->beforeUpdateCMSFields(function (FieldList $fields) {
-            $fields->removeByName([
-                'Images'
-            ]);
-            $fields->addFieldsToTab(
-                'Root.Settings', [
-                    DropdownField::create(
-                        'GalleryType',
-                        _t(
-                            __CLASS__ . '.TYPE',
-                            'Gallery type'
-                        ),
-                        [
-                            'grid' => _t(__CLASS__ . '.GRID_OF_IMAGES','Grid of images'),
-                            'slideshow' => _t(__CLASS__ . '.SLIDESHOW', 'Slideshow'),
-                            'Carousel' => _t(__CLASS__ . '.CAROUSEL_DEPRECATED', 'Carousel - deprecated - (note: https://shouldiuseacarousel.com/)'),
-                        ]
-                    )->setEmptyString('none'),
-                    CheckboxField::create(
-                        'UseJS',
-                        _t(
-                            __CLASS__ . '.JAVASCRIPT',
-                            'Use enhanced gallery'
-                        )
-                    ),
-                    CheckboxField::create(
-                        'ShowCaptions',
-                        _t(
-                            __CLASS__ . '.CAPTIONS',
-                            'Show image captions'
-                        )
-                    ),
-                    NumericField::create(
-                        'Width',
-                        _t(
-                            __CLASS__ . '.WIDTH', 'Thumbnail width'
-                        )
-                    ),
-                    NumericField::create(
-                        'Height',
-                        _t(
-                            __CLASS__ . '.HEIGHT', 'Thumbnail height'
-                        )
-                    )
-                ]
-            );
+        $fields = parent::getCMSFields();
+        $fields->removeByName([
+            'Images'
+        ]);
 
-            $fields->addFieldsToTab(
-                'Root.Main', [
-                    SortableUploadField::create(
-                        'Images',
-                        _t(
-                            __CLASS__ . '.GALLERY_IMAGES',
-                            'Gallery images'
-                        )
-                    )->setFolderName('quick-gallery/' . $this->ID)
-                    ->setAllowedExtensions($this->getAllowedFileTypes())
-                    ->setDescription(
-                        sprintf(_t(
-                            __CLASS__ . '.ALLOWED_FILE_TYPES',
-                            'Allowed file types: %s'
-                        ), implode(",", $this->getAllowedFileTypes()))
-                    )
-                ]
-            );
+        $fields->insertAfter(
+            'HTML',
+            SortableUploadField::create(
+                'Images',
+                _t(
+                    __CLASS__ . '.GALLERY_IMAGES',
+                    'Gallery images'
+                )
+            )->setFolderName('quick-gallery/' . $this->ID)
+            ->setAllowedExtensions($this->getAllowedFileTypes())
+            ->setDescription(
+                sprintf(_t(
+                    __CLASS__ . '.ALLOWED_FILE_TYPES',
+                    'Allowed file types: %s'
+                ), implode(",", $this->getAllowedFileTypes()))
+            )
+        );
 
-        });
-        return parent::getCMSFields();
+        $fields->addFieldsToTab(
+            'Root.Main',
+            [
+                DropdownField::create(
+                    'GalleryType',
+                    _t(
+                        __CLASS__ . '.TYPE',
+                        'Gallery type'
+                    ),
+                    [
+                        'grid' => _t(__CLASS__ . '.GRID_OF_IMAGES','Grid of images'),
+                        'slideshow' => _t(__CLASS__ . '.SLIDESHOW', 'Slideshow'),
+                        'Carousel' => _t(__CLASS__ . '.CAROUSEL_DEPRECATED', 'Carousel - deprecated - (note: https://shouldiuseacarousel.com/)'),
+                    ]
+                )->setEmptyString('none'),
+                CheckboxField::create(
+                    'UseJS',
+                    _t(
+                        __CLASS__ . '.JAVASCRIPT',
+                        'Use enhanced gallery'
+                    )
+                ),
+                CheckboxField::create(
+                    'ShowCaptions',
+                    _t(
+                        __CLASS__ . '.CAPTIONS',
+                        'Show image captions'
+                    )
+                ),
+                NumericField::create(
+                    'Width',
+                    _t(
+                        __CLASS__ . '.WIDTH', 'Thumbnail width'
+                    )
+                ),
+                NumericField::create(
+                    'Height',
+                    _t(
+                        __CLASS__ . '.HEIGHT', 'Thumbnail height'
+                    )
+                )
+            ]
+        );
+        return $fields;
     }
 
     /**
