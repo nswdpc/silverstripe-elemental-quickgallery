@@ -47,8 +47,8 @@ class QuickGalleryTest extends SapphireTest
         $default_thumb_width = 190;
         $default_thumb_height = 160;
 
-        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_width', $default_thumb_width);
-        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_height', $default_thumb_height);
+        Config::modify()->set(ElementQuickGallery::class, 'default_thumb_width', $default_thumb_width);
+        Config::modify()->set(ElementQuickGallery::class, 'default_thumb_height', $default_thumb_height);
 
         $record = [
             'Title' => 'Test gallery',
@@ -92,7 +92,7 @@ class QuickGalleryTest extends SapphireTest
 
         $this->assertEquals(3, $images->count(), "Should be 3 images");
 
-        $gallery->doPublish();
+        $gallery->publishRecursive();
 
         $this->assertTrue($gallery->isPublished(), "Gallery should be published");
 
