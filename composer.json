@@ -34,7 +34,7 @@
     "require": {
         "dnadesign/silverstripe-elemental": "^5",
         "bummzack/sortablefile" : "^2.2",
-        "purplespider/asset-alt-text": "^1.2.1"
+        "purplespider/asset-alt-text": "^2"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
