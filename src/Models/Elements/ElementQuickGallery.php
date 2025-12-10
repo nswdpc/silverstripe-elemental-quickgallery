@@ -32,7 +32,7 @@ class ElementQuickGallery extends ElementContent
 
     private static string $title = 'Quick Gallery';
 
-    private static string $description = "Display one or more images";
+    private static string $class_description = "Display one or more images";
 
     private static string $singular_name = 'Quick gallery';
 
@@ -108,6 +108,7 @@ class ElementQuickGallery extends ElementContent
         if (empty($types)) {
             $types = ["jpg","jpeg","gif","png","webp"];
         }
+
         return array_unique($types);
     }
 
