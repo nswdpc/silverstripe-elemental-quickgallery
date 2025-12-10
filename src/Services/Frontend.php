@@ -26,7 +26,6 @@ class Frontend {
     /**
      * Add all requirements
      * @return void
-     * @param ElementQuickGallery $element
      */
     public function addRequirements(ElementQuickGallery $element) {
         $this->element = $element;

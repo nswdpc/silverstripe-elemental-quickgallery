@@ -6,6 +6,7 @@ use NSWDPC\Elemental\Services\QuickGallery\Frontend;
 
 class ElementQuickGalleryController extends ElementController
 {
+    #[\Override]
     public function init() {
         parent::init();
         // @phpstan-ignore argument.type
