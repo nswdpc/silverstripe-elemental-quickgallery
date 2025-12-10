@@ -17,13 +17,13 @@ use SilverStripe\View\SSViewer;
  */
 class QuickGalleryTest extends SapphireTest
 {
-
     protected $usesDatabase = true;
 
     protected static $fixture_file = 'QuickGalleryTest.yml';
 
     #[\Override]
-    public function setUp() : void {
+    public function setUp(): void
+    {
         parent::setUp();
 
         TestAssetStore::activate('data');
@@ -36,13 +36,14 @@ class QuickGalleryTest extends SapphireTest
     }
 
     #[\Override]
-    public function tearDown() : void
+    public function tearDown(): void
     {
         TestAssetStore::reset();
         parent::tearDown();
     }
 
-    public function testGallery(): void {
+    public function testGallery(): void
+    {
 
         SSViewer::set_themes(['$public', '$default']);
 
@@ -121,7 +122,8 @@ class QuickGalleryTest extends SapphireTest
 
     }
 
-    public function testNegativeDimensions(): void {
+    public function testNegativeDimensions(): void
+    {
 
         $default_thumb_width = 80;
         $default_thumb_height = 80;
@@ -143,7 +145,8 @@ class QuickGalleryTest extends SapphireTest
 
     }
 
-    public function testPositiveDimensions(): void {
+    public function testPositiveDimensions(): void
+    {
 
         $default_thumb_width = 140;
         $default_thumb_height = 140;
@@ -165,7 +168,8 @@ class QuickGalleryTest extends SapphireTest
 
     }
 
-    public function testZeroDimensions(): void {
+    public function testZeroDimensions(): void
+    {
 
         $default_thumb_width = 140;
         $default_thumb_height = 140;

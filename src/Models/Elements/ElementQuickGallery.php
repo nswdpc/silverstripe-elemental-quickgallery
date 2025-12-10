@@ -6,12 +6,9 @@ use NSWDPC\Elemental\Controllers\QuickGallery\ElementQuickGalleryController;
 use Bummzack\SortableFile\Forms\SortableUploadField;
 use DNADesign\Elemental\Models\ElementContent;
 use SilverStripe\Assets\Image;
-use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\NumericField;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\CheckboxField;
-use SilverStripe\Forms\FieldList;
-use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DataList;
 
 /**
@@ -24,8 +21,8 @@ use SilverStripe\ORM\DataList;
  * @property bool $UseJS
  * @method \SilverStripe\ORM\ManyManyList<\SilverStripe\Assets\Image> Images()
  */
-class ElementQuickGallery extends ElementContent {
-
+class ElementQuickGallery extends ElementContent
+{
     private static string $icon = 'font-icon-thumbnails';
 
     /**
@@ -82,9 +79,10 @@ class ElementQuickGallery extends ElementContent {
     /**
      * Return the generated thumbnail width, use in templates if you want to rely on the configured default width value
      */
-    public function getThumbWidth() {
+    public function getThumbWidth()
+    {
         $width = $this->Width;
-        if($width <= 0) {
+        if ($width <= 0) {
             $width = self::config()->get('default_thumb_width');
         }
 
@@ -94,18 +92,20 @@ class ElementQuickGallery extends ElementContent {
     /**
      * Return the generated thumbnail height, use in templates if you want to rely on the configured default height value
      */
-    public function getThumbHeight() {
+    public function getThumbHeight()
+    {
         $height = $this->Height;
-        if($height <= 0) {
+        if ($height <= 0) {
             $height = self::config()->get('default_thumb_height');
         }
 
         return $height;
     }
 
-    public function getAllowedFileTypes(): array {
+    public function getAllowedFileTypes(): array
+    {
         $types = self::config()->get('allowed_file_types');
-        if(empty($types)) {
+        if (empty($types)) {
             $types = ["jpg","jpeg","gif","png","webp"];
         }
         return array_unique($types);
@@ -120,12 +120,12 @@ class ElementQuickGallery extends ElementContent {
         parent::onBeforeWrite();
 
         // if a new element, set dimensions to the defaults from config
-        if(!$this->exists()) {
-            if(is_null($this->Width)) {
+        if (!$this->exists()) {
+            if (is_null($this->Width)) {
                 $this->Width = $this->getThumbWidth();
             }
 
-            if(is_null($this->Height)) {
+            if (is_null($this->Height)) {
                 $this->Height = $this->getThumbHeight();
             }
         }
@@ -137,7 +137,8 @@ class ElementQuickGallery extends ElementContent {
     }
 
     #[\Override]
-    public function getCMSFields() {
+    public function getCMSFields()
+    {
         $fields = parent::getCMSFields();
         $fields->removeByName([
             'Images'
@@ -171,7 +172,7 @@ class ElementQuickGallery extends ElementContent {
                         'Gallery type'
                     ),
                     [
-                        'grid' => _t(self::class . '.GRID_OF_IMAGES','Grid of images'),
+                        'grid' => _t(self::class . '.GRID_OF_IMAGES', 'Grid of images'),
                         'slideshow' => _t(self::class . '.SLIDESHOW', 'Slideshow'),
                         'Carousel' => _t(self::class . '.CAROUSEL_DEPRECATED', 'Carousel - deprecated - (note: https://shouldiuseacarousel.com/)'),
                     ]
@@ -193,13 +194,15 @@ class ElementQuickGallery extends ElementContent {
                 NumericField::create(
                     'Width',
                     _t(
-                        self::class . '.WIDTH', 'Thumbnail width'
+                        self::class . '.WIDTH',
+                        'Thumbnail width'
                     )
                 ),
                 NumericField::create(
                     'Height',
                     _t(
-                        self::class . '.HEIGHT', 'Thumbnail height'
+                        self::class . '.HEIGHT',
+                        'Thumbnail height'
                     )
                 )
             ]
@@ -210,7 +213,8 @@ class ElementQuickGallery extends ElementContent {
     /**
      * Return images in sorted order
      */
-    public function SortedImages() : DataList {
+    public function SortedImages(): DataList
+    {
         return $this->Images()->Sort('SortOrder');
     }
 }

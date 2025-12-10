@@ -12,8 +12,8 @@ use SilverStripe\View\Requirements;
  * Apply your own frontend and/or frontend loader using Injector
  * @author James
  */
-class Frontend {
-
+class Frontend
+{
     use Configurable;
 
     use Injectable;
@@ -27,7 +27,8 @@ class Frontend {
      * Add all requirements
      * @return void
      */
-    public function addRequirements(ElementQuickGallery $element) {
+    public function addRequirements(ElementQuickGallery $element)
+    {
         $this->element = $element;
         if ($this->element->UseJS == 1) {
 
@@ -82,9 +83,10 @@ class Frontend {
      * Adds a loader to apply the frontend
      * @return void
      */
-    public function addLoader() {
+    public function addLoader()
+    {
 
-        if(!$this->element) {
+        if (!$this->element) {
             // Cannot load if no element defined
             return;
         }

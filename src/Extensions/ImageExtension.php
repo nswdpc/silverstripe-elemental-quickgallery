@@ -10,8 +10,8 @@ use SilverStripe\ORM\DataExtension;
  * @method \SilverStripe\ORM\ManyManyList<\NSWDPC\Elemental\Models\QuickGallery\ElementQuickGallery> QuickGalleries()
  * @extends \SilverStripe\ORM\DataExtension<static>
  */
-class ImageExtension extends DataExtension {
-
+class ImageExtension extends DataExtension
+{
     private static array $belongs_many_many = [
         'QuickGalleries' => ElementQuickGallery::class
     ];
