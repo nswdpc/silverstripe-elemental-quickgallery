@@ -5,7 +5,7 @@ namespace NSWDPC\Elemental\Tests\QuickGallery;
 use NSWDPC\Elemental\Models\QuickGallery\ElementQuickGallery;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\SapphireTest;
-use Silverstripe\Assets\Dev\TestAssetStore;
+use SilverStripe\Assets\Dev\TestAssetStore;
 use SilverStripe\Assets\File;
 use SilverStripe\Assets\Folder;
 use SilverStripe\Assets\Image;
@@ -106,8 +106,11 @@ class QuickGalleryTest extends SapphireTest
         $this->assertTrue(strpos($template, $image2->Name) !== false, "{$image2->Name} is not in the template");
         $this->assertTrue(strpos($template, $image3->Name) !== false, "{$image3->Name} is not in the template");
 
+        // @phpstan-ignore method.notFound
         $url1 = $image1->FillMax($gallery->Width, $gallery->Height)->Link();
+        // @phpstan-ignore method.notFound
         $url2 = $image2->FillMax($gallery->Width, $gallery->Height)->Link();
+        // @phpstan-ignore method.notFound
         $url3 = $image3->FillMax($gallery->Width, $gallery->Height)->Link();
 
         $this->assertTrue(strpos($template, $url1) !== false, "{$url1} is not in the template");
@@ -121,8 +124,8 @@ class QuickGalleryTest extends SapphireTest
         $default_thumb_width = 80;
         $default_thumb_height = 80;
 
-        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_width', $default_thumb_width);
-        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_height', $default_thumb_height);
+        Config::modify()->set(ElementQuickGallery::class, 'default_thumb_width', $default_thumb_width);
+        Config::modify()->set(ElementQuickGallery::class, 'default_thumb_height', $default_thumb_height);
 
         $record = [
             'Title' => 'Test dimensions',
@@ -143,8 +146,8 @@ class QuickGalleryTest extends SapphireTest
         $default_thumb_width = 140;
         $default_thumb_height = 140;
 
-        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_width', $default_thumb_width);
-        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_height', $default_thumb_height);
+        Config::modify()->set(ElementQuickGallery::class, 'default_thumb_width', $default_thumb_width);
+        Config::modify()->set(ElementQuickGallery::class, 'default_thumb_height', $default_thumb_height);
 
         $record = [
             'Title' => 'Test dimensions',
@@ -165,8 +168,8 @@ class QuickGalleryTest extends SapphireTest
         $default_thumb_width = 140;
         $default_thumb_height = 140;
 
-        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_width', $default_thumb_width);
-        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_height', $default_thumb_height);
+        Config::modify()->set(ElementQuickGallery::class, 'default_thumb_width', $default_thumb_width);
+        Config::modify()->set(ElementQuickGallery::class, 'default_thumb_height', $default_thumb_height);
 
         $record = [
             'Title' => 'Test dimensions',

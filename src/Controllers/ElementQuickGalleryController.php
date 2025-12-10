@@ -8,6 +8,7 @@ class ElementQuickGalleryController extends ElementController
 {
     public function init() {
         parent::init();
+        // @phpstan-ignore argument.type
         Frontend::create()->addRequirements($this->getElement());
     }
 
