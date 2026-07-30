@@ -15,7 +15,7 @@ See composer.json
 
 ## Installation
 
-```
+```sh
 composer require nswdpc/silverstripe-elemental-quickgallery
 ```
 
@@ -33,7 +33,7 @@ See [config.yml](./_config/config.yml) for default project configuration values
 
 ## Maintainers
 
-+ [dpcdigital@NSWDPC:~$](https://dpc.nsw.gov.au)
++ PD Web Team
 
 ## Bugtracker
 

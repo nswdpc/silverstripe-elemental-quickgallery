@@ -12,12 +12,10 @@
     "license": "BSD-3-Clause",
     "authors": [
         {
-            "name": "Mark Taylor",
-            "role": "Bon Vivant"
+            "name": "Mark Taylor"
         },
         {
-            "name": "James Ellis",
-            "role": "Developer"
+            "name": "James Ellis"
         }
     ],
     "autoload": {
