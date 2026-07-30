@@ -1,1 +1,3 @@
-<img src="{$FillMax($Width,$Height).URL}" alt="<% if $Title %>{$Title.XML}<% end_if %>">
+<% if $Width && $Height %>
+{$FillMax($Width.Value, $Height.Value)}
+<% end_if %>

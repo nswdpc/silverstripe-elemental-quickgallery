@@ -79,27 +79,25 @@ class ElementQuickGallery extends ElementContent
     /**
      * Return the generated thumbnail width, use in templates if you want to rely on the configured default width value
      */
-    public function getThumbWidth()
+    public function getThumbWidth(): int
     {
         $width = $this->Width;
         if ($width <= 0) {
             $width = self::config()->get('default_thumb_width');
         }
-
-        return $width;
+        return (int) $width;
     }
 
     /**
      * Return the generated thumbnail height, use in templates if you want to rely on the configured default height value
      */
-    public function getThumbHeight()
+    public function getThumbHeight(): int
     {
         $height = $this->Height;
         if ($height <= 0) {
             $height = self::config()->get('default_thumb_height');
         }
-
-        return $height;
+        return (int) $height;
     }
 
     public function getAllowedFileTypes(): array
