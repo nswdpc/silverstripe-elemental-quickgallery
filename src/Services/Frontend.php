@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NSWDPC\Elemental\Services\QuickGallery;
 
 use NSWDPC\Elemental\Models\QuickGallery\ElementQuickGallery;
