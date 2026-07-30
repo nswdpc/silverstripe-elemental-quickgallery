@@ -5,7 +5,7 @@ namespace NSWDPC\Elemental\Tests\QuickGallery;
 use NSWDPC\Elemental\Models\QuickGallery\ElementQuickGallery;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\SapphireTest;
-use Silverstripe\Assets\Dev\TestAssetStore;
+use SilverStripe\Assets\Dev\TestAssetStore;
 use SilverStripe\Assets\File;
 use SilverStripe\Assets\Folder;
 use SilverStripe\Assets\Image;
@@ -17,12 +17,13 @@ use SilverStripe\View\SSViewer;
  */
 class QuickGalleryTest extends SapphireTest
 {
-
     protected $usesDatabase = true;
 
     protected static $fixture_file = 'QuickGalleryTest.yml';
 
-    public function setUp() : void {
+    #[\Override]
+    public function setUp(): void
+    {
         parent::setUp();
 
         TestAssetStore::activate('data');
@@ -34,13 +35,15 @@ class QuickGalleryTest extends SapphireTest
         }
     }
 
-    public function tearDown() : void
+    #[\Override]
+    public function tearDown(): void
     {
         TestAssetStore::reset();
         parent::tearDown();
     }
 
-    public function testGallery() {
+    public function testGallery(): void
+    {
 
         SSViewer::set_themes(['$public', '$default']);
 
@@ -102,27 +105,31 @@ class QuickGalleryTest extends SapphireTest
 
         $template = $gallery->forTemplate();
 
-        $this->assertTrue(strpos($template, $image1->Name) !== false, "{$image1->Name} is not in the template");
-        $this->assertTrue(strpos($template, $image2->Name) !== false, "{$image2->Name} is not in the template");
-        $this->assertTrue(strpos($template, $image3->Name) !== false, "{$image3->Name} is not in the template");
+        $this->assertTrue(str_contains((string) $template, $image1->Name), "{$image1->Name} is not in the template");
+        $this->assertTrue(str_contains((string) $template, $image2->Name), "{$image2->Name} is not in the template");
+        $this->assertTrue(str_contains((string) $template, $image3->Name), "{$image3->Name} is not in the template");
 
+        // @phpstan-ignore method.notFound
         $url1 = $image1->FillMax($gallery->Width, $gallery->Height)->Link();
+        // @phpstan-ignore method.notFound
         $url2 = $image2->FillMax($gallery->Width, $gallery->Height)->Link();
+        // @phpstan-ignore method.notFound
         $url3 = $image3->FillMax($gallery->Width, $gallery->Height)->Link();
 
-        $this->assertTrue(strpos($template, $url1) !== false, "{$url1} is not in the template");
-        $this->assertTrue(strpos($template, $url2) !== false, "{$url2} is not in the template");
-        $this->assertTrue(strpos($template, $url3) !== false, "{$url3} is not in the template");
+        $this->assertTrue(str_contains((string) $template, (string) $url1), "{$url1} is not in the template");
+        $this->assertTrue(str_contains((string) $template, (string) $url2), "{$url2} is not in the template");
+        $this->assertTrue(str_contains((string) $template, (string) $url3), "{$url3} is not in the template");
 
     }
 
-    public function testNegativeDimensions() {
+    public function testNegativeDimensions(): void
+    {
 
         $default_thumb_width = 80;
         $default_thumb_height = 80;
 
-        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_width', $default_thumb_width);
-        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_height', $default_thumb_height);
+        Config::modify()->set(ElementQuickGallery::class, 'default_thumb_width', $default_thumb_width);
+        Config::modify()->set(ElementQuickGallery::class, 'default_thumb_height', $default_thumb_height);
 
         $record = [
             'Title' => 'Test dimensions',
@@ -138,13 +145,14 @@ class QuickGalleryTest extends SapphireTest
 
     }
 
-    public function testPositiveDimensions() {
+    public function testPositiveDimensions(): void
+    {
 
         $default_thumb_width = 140;
         $default_thumb_height = 140;
 
-        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_width', $default_thumb_width);
-        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_height', $default_thumb_height);
+        Config::modify()->set(ElementQuickGallery::class, 'default_thumb_width', $default_thumb_width);
+        Config::modify()->set(ElementQuickGallery::class, 'default_thumb_height', $default_thumb_height);
 
         $record = [
             'Title' => 'Test dimensions',
@@ -160,13 +168,14 @@ class QuickGalleryTest extends SapphireTest
 
     }
 
-    public function testZeroDimensions() {
+    public function testZeroDimensions(): void
+    {
 
         $default_thumb_width = 140;
         $default_thumb_height = 140;
 
-        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_width', $default_thumb_width);
-        Config::inst()->update(ElementQuickGallery::class, 'default_thumb_height', $default_thumb_height);
+        Config::modify()->set(ElementQuickGallery::class, 'default_thumb_width', $default_thumb_width);
+        Config::modify()->set(ElementQuickGallery::class, 'default_thumb_height', $default_thumb_height);
 
         $record = [
             'Title' => 'Test dimensions',
