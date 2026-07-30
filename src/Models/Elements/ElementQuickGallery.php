@@ -85,6 +85,7 @@ class ElementQuickGallery extends ElementContent
         if ($width <= 0) {
             $width = self::config()->get('default_thumb_width');
         }
+
         return (int) $width;
     }
 
@@ -97,6 +98,7 @@ class ElementQuickGallery extends ElementContent
         if ($height <= 0) {
             $height = self::config()->get('default_thumb_height');
         }
+
         return (int) $height;
     }
 
